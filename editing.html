@@ -26,6 +26,40 @@
     margin:0; font-family:'Inter', sans-serif; color:var(--ink);
     background:linear-gradient(180deg,#0C1229 0%,#131D45 55%,#1B2C66 100%) fixed; line-height:1.6;
   }
+
+  /* ===== SCROLL PROGRESS BAR ===== */
+  .scroll-progress{position:fixed; top:0; left:0; height:3px; width:0%; background:linear-gradient(90deg,var(--blue),#8FB4FF); z-index:100; transition:width .05s linear;}
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.08s;}
+  .reveal-delay-2{transition-delay:.16s;}
+  .reveal-delay-3{transition-delay:.24s;}
+
+  /* ===== HERO ENTRANCE ===== */
+  .hero .eyebrow,.hero h1,.hero p.lede,.hero .cta-btn,.hero .fold-line{opacity:0; transform:translateY(22px); animation:heroIn .7s cubic-bezier(.16,1,.3,1) forwards;}
+  .hero .eyebrow{animation-delay:.1s;}
+  .hero h1{animation-delay:.2s;}
+  .hero p.lede{animation-delay:.32s;}
+  .hero .cta-btn{animation-delay:.44s;}
+  .hero .fold-line{animation-delay:.56s;}
+  @keyframes heroIn{to{opacity:1; transform:translateY(0);}}
+
+  /* ===== HEADER SHRINK ON SCROLL ===== */
+  header.site{transition:padding .2s ease, box-shadow .2s ease;}
+  header.site.scrolled{box-shadow:0 4px 20px rgba(0,0,0,0.25);}
+  header.site.scrolled .header-inner{padding:10px 32px;}
+  header.site.scrolled .logo{font-size:17px;}
+  header.site.scrolled .logo .mark{width:26px; height:26px;}
+
+  /* ===== TWINKLING STARS ===== */
+  .star.twinkle{animation:twinkle var(--dur,3s) ease-in-out infinite; animation-delay:var(--delay,0s);}
+  @keyframes twinkle{0%,100%{opacity:1; box-shadow:0 0 6px 1px rgba(255,255,255,0.55);}50%{opacity:.3; box-shadow:0 0 2px 0 rgba(255,255,255,0.2);}}
+
+  /* ===== STAT COUNTER ===== */
+  .stat-number{font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700; color:#fff;}
+  .stat-suffix{font-size:15px; font-weight:600; color:rgba(255,255,255,0.7);}
   h1,h2,h3{ font-family:'Space Grotesk', sans-serif; font-weight:600; margin:0 0 0.5em; color:var(--ink);}
   a{color:var(--blue-dark); text-decoration:underline; text-decoration-color:transparent; transition:text-decoration-color .15s ease, color .15s ease;}
   a:hover{text-decoration-color:var(--blue-dark); color:var(--blue);}
@@ -136,11 +170,13 @@
     background:var(--paper-2); border:1px solid var(--line); border-radius:14px; padding:22px;
     position:relative; transition:transform .15s ease, box-shadow .15s ease;
   }
-  .card:hover{ transform:translateY(-4px); box-shadow:0 14px 26px rgba(23,27,46,0.10);}
+  .card:hover{ transform:translateY(-6px); box-shadow:0 18px 32px rgba(23,27,46,0.10);}
+  .card{transition:transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, border-color .25s ease;}
   .card .chip{
-    width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center;
-    font-size:16px; margin-bottom:14px; color:#fff;
+    width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    font-size:18px; margin-bottom:14px; color:#fff; transition:transform .3s ease;
   }
+  .card:hover .chip{transform:scale(1.12) rotate(-4deg);}
   .card h3{font-size:16.5px; margin-bottom:8px;}
   .card p{color:var(--ink-soft); font-size:13.5px; margin-bottom:14px;}
   .card a.link{font-weight:700; font-size:13px;}
@@ -228,6 +264,7 @@
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
 <div class="starfield" id="starfield" aria-hidden="true"></div>
 
 <header class="site">
@@ -265,12 +302,12 @@
 
 <main>
   <div class="wrap body-section">
-    <section class="how-it-works" id="about">
+    <section class="how-it-works reveal" id="about">
       <h1 style="font-size:38px; margin-bottom:14px;">How it works</h1>
 
     </section>
 
-    <div class="grid-2" id="how">
+    <div class="grid-2 reveal" id="how">
       <div class="carousel">
         <div class="carousel-track" id="track">
           <div class="slide">
@@ -303,7 +340,7 @@
         </div>
       </div>
 
-      <aside class="sidebar" id="roadmap">
+      <aside class="sidebar reveal reveal-delay-1" id="roadmap">
         <h3>What we consider</h3>
         
         <ul>
@@ -315,7 +352,7 @@
       </aside>
     </div>
     <div class="wrap body-section">
-      <section class="about-us" id="about-project">
+      <section class="about-us reveal" id="about-project">
         <h1 style="font-size:38px; margin-bottom:12px;">About Us</h1>
       </section>
       <h2>Built to solve a problem students actually face.</h2>
@@ -325,19 +362,19 @@
     </article>
 
     <div class="cards" id="dataset">
-      <div class="card" id="domains">
+      <div class="card reveal" id="domains">
         <div class="chip" style="background:#2F6FED">◧</div>
-        <h3>11 fields of study</h3>
+        <h3><span class="stat-number" data-target="11">0</span> <span class="stat-suffix">fields of study</span></h3>
         <p>From CS & IT to Law & Public Policy, laptop are matched to needs of each field.</p>
         
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-1">
         <div class="chip" style="background:#FFB020">▤</div>
-        <h3>1,018 laptops dataset</h3>
+        <h3><span class="stat-number" data-target="1018" data-suffix=" laptops dataset">0</span></h3>
         <p>A dataset covering real laptop specs, including price, RAM, processor, storage and GPU.</p>
         
       </div>
-      <div class="card">
+      <div class="card reveal reveal-delay-2">
         <div class="chip" style="background:#12B886">⇲</div>
         <h3>Buy & compare</h3>
         <p>Every recommendation links to Amazon, Flipkart and Croma so you can compare before you buy.</p>
@@ -392,7 +429,7 @@
 </script>
 
 <script>
-  // Stars: fixed seed = same sky every visit. Hover a star and it blinks.
+  // Stars: fixed seed = same sky every visit. Some twinkle on their own; hover one and it blinks.
   (function(){
     function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
     const rnd = mulberry32(11);
@@ -400,10 +437,17 @@
     const sizes = ['s1','s1','s2','s2','s3'];
     for(let i=0;i<90;i++){
       const s = document.createElement('span');
-      s.className = 'star ' + sizes[Math.floor(rnd()*sizes.length)];
+      const sz = sizes[Math.floor(rnd()*sizes.length)];
+      s.className = 'star ' + sz;
       s.style.left = (1 + rnd()*98).toFixed(1) + '%';
       s.style.top = (1 + rnd()*92).toFixed(1) + '%';
       s.style.opacity = (0.35 + rnd()*0.55).toFixed(2);
+      // ~35% of stars twinkle gently on their own
+      if(rnd() < 0.35){
+        s.classList.add('twinkle');
+        s.style.setProperty('--dur', (2 + rnd()*4).toFixed(1) + 's');
+        s.style.setProperty('--delay', (rnd()*4).toFixed(1) + 's');
+      }
       field.appendChild(s);
     }
   })();
@@ -411,11 +455,81 @@
 
 <script>
   // Link the website to the Streamlit app.
-  // Change APP_URL to your live Streamlit link when you deploy it.
   const APP_URL = "http://localhost:8501";
   document.querySelectorAll('[data-app-link]').forEach(a => {
     a.href = APP_URL;
   });
+</script>
+
+<script>
+  // ===== Scroll progress bar =====
+  const progressBar = document.getElementById('scrollProgress');
+  function updateProgress(){
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = h > 0 ? (window.scrollY / h) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+
+  // ===== Header shrink on scroll =====
+  const header = document.querySelector('header.site');
+  function onScroll(){
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // ===== Scroll reveal (IntersectionObserver) =====
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Animated number counters =====
+  function animateCounter(el){
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const dur = 1400;
+    const start = performance.now();
+    function tick(now){
+      const t = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const val = Math.round(target * eased);
+      el.textContent = val.toLocaleString() + (t === 1 ? suffix : '');
+      if(t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        animateCounter(e.target);
+        counterIO.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.5});
+  document.querySelectorAll('.stat-number').forEach(el => counterIO.observe(el));
+
+  // ===== Starfield parallax on scroll =====
+  const starfield = document.getElementById('starfield');
+  window.addEventListener('scroll', () => {
+    starfield.style.transform = 'translateY(' + (window.scrollY * 0.15) + 'px)';
+  }, {passive:true});
+
+  // ===== Touch/swipe support for the carousel =====
+  const track = document.getElementById('track');
+  let touchStartX = 0;
+  track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 50) go(dx < 0 ? index + 1 : index - 1);
+  }, {passive:true});
 </script>
 
 </body>
