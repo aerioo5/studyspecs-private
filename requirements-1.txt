@@ -1,0 +1,6 @@
+streamlit
+pandas
+skitlearn
+python
+dataset from kaggel.Com
+websites comparison

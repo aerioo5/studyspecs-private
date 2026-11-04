@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Specs — find the laptop that fits your field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F7FB;
+    --paper-2:#FFFFFF;
+    --ink:#171B2E;
+    --ink-soft:#5B6478;
+    --blue:#2F6FED;
+    --blue-dark:#1F4FBE;
+    --amber:#FFB020;
+    --amber-dark:#B87400;
+    --mint:#12B886;
+    --line:rgba(23,27,46,0.10);
+    --line-strong:rgba(23,27,46,0.22);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:'Inter', sans-serif; color:var(--ink);
+    background:linear-gradient(180deg,#0C1229 0%,#131D45 55%,#1B2C66 100%) fixed; line-height:1.6;
+  }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; font-weight:600; margin:0 0 0.5em; color:var(--ink);}
+  a{color:var(--blue-dark); text-decoration:underline; text-decoration-color:transparent; transition:text-decoration-color .15s ease, color .15s ease;}
+  a:hover{text-decoration-color:var(--blue-dark); color:var(--blue);}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 32px;}
+  code{
+    font-family:'Space Grotesk', monospace; background:rgba(47,111,237,0.09);
+    color:var(--blue-dark); padding:2px 7px; border-radius:5px; font-size:0.9em;
+  }
+
+  /* ===== HEADER ===== */
+  header.site{ background:var(--paper-2); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50;}
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; max-width:1120px; margin:0 auto;}
+  .logo{ display:flex; align-items:center; gap:9px; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:19px; text-decoration:none; color:var(--ink);}
+  .logo:hover{ text-decoration:none; color:var(--ink);}
+  .logo .mark{ width:30px; height:30px; flex:none;}
+  nav.primary{display:flex; align-items:center; gap:30px;}
+  nav.primary ul{list-style:none; display:flex; gap:26px; margin:0; padding:0; align-items:center;}
+  nav.primary a{ color:var(--ink); text-decoration:none; font-weight:600; font-size:14.5px;}
+  nav.primary a:hover{color:var(--blue-dark);}
+  .dropdown{position:relative;}
+  .dropdown > a::after{content:" ▾"; font-size:10px; color:var(--ink-soft);}
+  .dropdown-menu{
+    position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%);
+    background:var(--paper-2); border:1px solid var(--line); border-radius:10px;
+    box-shadow:0 10px 24px rgba(23,27,46,0.10);
+    min-width:210px; padding:8px; opacity:0; visibility:hidden;
+    transition:opacity .15s ease, transform .15s ease;
+  }
+  .dropdown:hover .dropdown-menu{opacity:1; visibility:visible; transform:translateX(-50%) translateY(0);}
+  .dropdown-menu a{ display:block; padding:9px 12px; border-radius:6px; font-weight:600; font-size:13.5px;}
+  .dropdown-menu a:hover{background:var(--paper); color:var(--blue-dark);}
+  .nav-cta{
+    background:var(--ink); color:#fff !important; padding:9px 18px; border-radius:8px;
+    font-weight:700 !important; font-size:13.5px !important;
+  }
+  .nav-cta:hover{ background:var(--blue-dark); color:#fff !important;}
+  .hamburger{display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer; padding:6px;}
+  .hamburger span{width:22px; height:2px; background:var(--ink);}
+
+  /* ===== HERO ===== */
+  .hero{ position:relative; overflow:hidden; background:transparent; padding:84px 32px 0;}
+  .hero-inner{ max-width:1120px; margin:0 auto; text-align:center; position:relative; z-index:2;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-weight:700; letter-spacing:.03em;
+    text-transform:uppercase; font-size:11.5px; color:var(--blue-dark);
+    background:rgba(47,111,237,0.10); padding:6px 14px; border-radius:999px; margin-bottom:22px;
+  }
+  .hero h1{ font-size:50px; line-height:1.14; max-width:760px; margin:0 auto 20px;}
+  .hero h1 span{ color:var(--blue);}
+  .hero p.lede{ font-size:17.5px; color:var(--ink-soft); max-width:560px; margin:0 auto 34px;}
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px; background:var(--ink); color:#fff; border:none;
+    font-family:'Inter', sans-serif; font-weight:700; font-size:15.5px; padding:15px 28px;
+    border-radius:10px; text-decoration:none; box-shadow:0 5px 0 #05070f;
+    transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .cta-btn:hover{ color:#fff; text-decoration:none; transform:translateY(2px); box-shadow:0 3px 0 #05070f;}
+  .hero-scene{ max-width:760px; margin:54px auto 0; position:relative;}
+  .fold-line{ position:relative; height:66px; margin-top:20px;}
+  .fold-line span{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:var(--paper);
+    padding:0 14px; font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .fold-line::before{ content:""; position:absolute; left:32px; right:32px; top:50%; border-top:2px dashed var(--line-strong);}
+
+  /* ===== BODY LAYOUT ===== */
+  .body-section{padding:52px 32px 0;}
+  .grid-2{ display:grid; grid-template-columns:2.1fr 1fr; gap:26px; align-items:stretch;}
+
+  /* Carousel */
+  .carousel{ background:var(--paper-2); border:1px solid var(--line); border-radius:16px; overflow:hidden; position:relative;}
+  .carousel-track{ display:flex; transition:transform .4s ease;}
+  .slide{ min-width:100%; padding:38px 42px 30px; text-align:left;}
+  .slide .kicker{ font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--mint); margin-bottom:10px;}
+  .slide h3{font-size:21px; margin-bottom:10px;}
+  .slide p{color:var(--ink-soft); font-size:14.5px; max-width:480px;}
+  .carousel-nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px 22px;}
+  .carousel-arrows{display:flex; gap:10px;}
+  .carousel-arrows button{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line-strong);
+    background:var(--paper-2); cursor:pointer; font-size:16px; color:var(--ink);
+  }
+  .carousel-arrows button:hover{background:var(--paper);}
+  .dots{display:flex; gap:8px;}
+  .dots button{ width:8px; height:8px; border-radius:50%; border:none; background:var(--line-strong); padding:0; cursor:pointer;}
+  .dots button.active{background:var(--blue); width:22px; border-radius:5px;}
+
+  /* Sidebar */
+  .sidebar{ background:var(--ink); color:#fff; border-radius:16px; padding:26px 24px;}
+  .sidebar h3{ color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:.04em; font-weight:700; margin-bottom:4px;}
+  .sidebar .sub{color:rgba(255,255,255,0.55); font-size:12.5px; margin-bottom:18px;}
+  .sidebar ul{list-style:none; margin:0; padding:0;}
+  .sidebar li{padding:13px 0; border-top:1px solid rgba(255,255,255,0.13); display:flex; gap:10px; align-items:flex-start;}
+  .sidebar li:first-of-type{border-top:none;}
+  .sidebar .dot{width:8px; height:8px; border-radius:50%; margin-top:6px; flex:none;}
+  .sidebar li div span{ display:block; color:rgba(255,255,255,0.5); font-weight:400; font-size:12px; margin-top:3px;}
+  .sidebar li div strong{font-size:14px; font-weight:700;}
+
+ /* About us intro block */
+ .about-us{ padding:0 0 38px; }
+ .about-us .kicker{ font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--mint); margin-bottom:12px;}
+ .about-us h2{font-size:26px; max-width:660px;}
+ .about-us p{color:var(--ink-soft); font-size:15px; max-width:660px;}
+
+  /* Cards */
+  .cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-top:38px;}
+  .card{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:14px; padding:22px;
+    position:relative; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{ transform:translateY(-4px); box-shadow:0 14px 26px rgba(23,27,46,0.10);}
+  .card .chip{
+    width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+    font-size:16px; margin-bottom:14px; color:#fff;
+  }
+  .card h3{font-size:16.5px; margin-bottom:8px;}
+  .card p{color:var(--ink-soft); font-size:13.5px; margin-bottom:14px;}
+  .card a.link{font-weight:700; font-size:13px;}
+
+  .wave{display:block; width:100vw; height:110px; margin-top:60px; margin-left:calc(50% - 50vw); }
+
+  /* ===== FOOTER ===== */
+  footer.site{ background:var(--ink); color:rgba(255,255,255,0.72); padding:46px 32px 26px;}
+  .footer-inner{
+    max-width:1120px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap;
+    gap:26px; padding-bottom:22px; border-bottom:1px solid rgba(255,255,255,0.13);
+  }
+  .footer-inner h4{ color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:14.5px; margin-bottom:10px;}
+  .footer-inner p{margin:0; font-size:13.5px; line-height:1.7;}
+  .socials{display:flex; gap:12px; margin-top:12px;}
+  .socials a{
+    width:33px; height:33px; border-radius:50%; border:1px solid rgba(255,255,255,0.28);
+    display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:13px;
+  }
+  .socials a:hover{background:rgba(255,255,255,0.12); color:#fff;}
+  .copyright{ max-width:1120px; margin:16px auto 0; font-size:12.5px; color:rgba(255,255,255,0.45); text-align:center;}
+
+  /* ===== DARK STARRY THEME ===== */
+  html{background:#0C1229;}
+  .starfield{position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:0; pointer-events:none; overflow:hidden;}
+  .star{position:absolute; background:#fff; border-radius:50%; box-shadow:0 0 6px 1px rgba(255,255,255,0.55); pointer-events:auto; cursor:default;}
+  .star::before{content:""; position:absolute; top:-10px; left:-10px; right:-10px; bottom:-10px;}
+  .star.s1{width:2px; height:2px;}
+  .star.s2{width:3px; height:3px;}
+  .star.s3{width:4px; height:4px;}
+  .star:hover{animation:starblink 0.8s ease-in-out infinite;}
+  @keyframes starblink{
+    0%,100%{opacity:1; transform:scale(2.4); box-shadow:0 0 14px 4px rgba(255,255,255,0.95);}
+    50%{opacity:0.15; transform:scale(0.7); box-shadow:none;}
+  }
+  /* Content sits above the stars; empty areas let the mouse through to them */
+  .hero, main, footer.site{position:relative; z-index:1;}
+  .hero, .hero-inner, main, .wrap, .body-section, .grid-2, .cards, .how-it-works, .about-us{pointer-events:none;}
+  .hero-inner > *, .fold-line span, .how-it-works > *, .about-us > *, .body-section > h2, .body-section > p,
+  .carousel, .sidebar, .card{pointer-events:auto;}
+  .hero h1, .hero p.lede, .how-it-works h1, .about-us h1, .body-section > h2{width:fit-content;}
+
+  /* Text that now sits directly on the dark background */
+  .eyebrow{color:#8FB4FF; background:rgba(255,255,255,0.10);}
+  .hero h1{color:#fff;}
+  .hero h1 span{color:#8FB4FF;}
+  .hero p.lede{color:rgba(255,255,255,0.75);}
+  /* Same look as the Continue button in the Streamlit app */
+  .cta-btn{background:var(--blue); color:#fff; border:1px solid var(--blue-dark); border-radius:10px; font-weight:600; text-decoration:none; box-shadow:0 4px 14px rgba(47,111,237,0.35); transform:none;}
+  .cta-btn:hover{background:var(--blue-dark); border-color:#8FB4FF; color:#fff; box-shadow:0 4px 14px rgba(47,111,237,0.35); transform:none;}
+  .fold-line{display:flex; align-items:center; gap:14px; padding:0 32px;}
+  .fold-line::before, .fold-line::after{content:""; position:static; flex:1; border-top:2px dashed rgba(255,255,255,0.28);}
+  .fold-line span{position:static; transform:none; background:transparent; padding:0; color:rgba(255,255,255,0.7);}
+  .how-it-works h1, .about-us h1, .body-section > h2{color:#fff;}
+  .body-section > p, .about-us p{color:rgba(255,255,255,0.78);}
+  .sidebar{border:1px solid rgba(255,255,255,0.22);}
+
+  /* Translucent (25% white) boxes: How it works carousel + About Us cards */
+  .carousel, .card{background:rgba(255,255,255,0.25); border:1px solid rgba(255,255,255,0.40);}
+  .card:hover{border-color:rgba(255,255,255,0.65); box-shadow:0 14px 26px rgba(0,0,0,0.25);}
+  .slide h3, .card h3{color:#fff;}
+  .slide p, .card p{color:rgba(255,255,255,0.85);}
+  .carousel-arrows button{background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.45); color:#fff;}
+  .carousel-arrows button:hover{background:rgba(255,255,255,0.32);}
+  .dots button{background:rgba(255,255,255,0.40);}
+  .dots button.active{background:var(--blue);}
+
+  /* White footer so the white waves flow straight into it */
+  footer.site{background:#FFFFFF; color:var(--ink-soft);}
+  .footer-inner{border-bottom:1px solid var(--line);}
+  .footer-inner h4{color:var(--ink);}
+  .socials a{border:1px solid var(--line-strong); color:var(--ink);}
+  .socials a:hover{background:rgba(47,111,237,0.08); color:var(--blue-dark);}
+  .copyright{color:var(--ink-soft);}
+
+  @media (max-width:860px){
+    nav.primary ul{display:none;}
+    .hamburger{display:flex;}
+    .grid-2{grid-template-columns:1fr;}
+    .cards{grid-template-columns:1fr;}
+    .hero h1{font-size:34px;}
+    .story{padding:26px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="starfield" id="starfield" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="header-inner">
+    <a class="logo" href="#top">
+      <svg class="mark" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="6" width="26" height="15" rx="2" fill="#2F6FED"/>
+        <rect x="4.5" y="8.2" width="21" height="10.6" rx="1" fill="#EEF2FC"/>
+        <path d="M0 22.5h30l-2.5 3.5h-25L0 22.5z" fill="#171B2E"/>
+      </svg>
+      Study Specs
+    </a>
+    <nav class="primary">
+      <ul>
+        <li><a href="#about">How it works</a></li>
+        <li><a href="#about-project">About Us</a></li>
+        <li><a class="nav-cta" data-app-link href="#how">Launch the wizard</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <span class="eyebrow">A college mini project</span>
+    <h1>Stop guessing laptop specs. <span>Start studying.</span></h1>
+    <p class="lede">Tell us what you study. We'll help you find the laptop that fits your needs.</p>
+    <a class="cta-btn" data-app-link href="#how">Find My Laptop</a>
+
+   
+  </div>
+  <div class="fold-line"><span>See how it works</span></div>
+</section>
+
+<main>
+  <div class="wrap body-section">
+    <section class="how-it-works" id="about">
+      <h1 style="font-size:38px; margin-bottom:14px;">How it works</h1>
+
+    </section>
+
+    <div class="grid-2" id="how">
+      <div class="carousel">
+        <div class="carousel-track" id="track">
+          <div class="slide">
+            <div class="kicker">Step 1</div>
+            <h3>Tell us what you study</h3>
+            <p>CS & IT, Medicine, Engineering, Law and 7 more.<br>Pick the field closest to your course.</p>
+          </div>
+          <div class="slide">
+            <div class="kicker">Step 2</div>
+            <h3>Answer a quick wizard</h3>
+            <p>Tell us your budget, how you'll use your laptop, storage needs,<br>brand preference and more.<br>8 simple questions. No tech jargon.</p>
+          </div>
+          <div class="slide">
+            <div class="kicker">Step 3</div>
+            <h3>Get your laptop matches</h3>
+            <p>Every laptop in our dataset has a fit score across 11 fields.<br>Your answers filter and rank against the best matches instantly.</p>
+          </div>
+          <div class="slide">
+            <div class="kicker">Step 4</div>
+            <h3>Buy or compare in one tap</h3>
+            <p>Each match links straight to Amazon, Flipkart, and Croma.<br>Compare prices and choose what works for you.</p>
+          </div>
+        </div>
+        <div class="carousel-nav">
+          <div class="carousel-arrows">
+            <button id="prev" aria-label="Previous step">‹</button>
+            <button id="next" aria-label="Next step">›</button>
+          </div>
+          <div class="dots" id="dots"></div>
+        </div>
+      </div>
+
+      <aside class="sidebar" id="roadmap">
+        <h3>What we consider</h3>
+        
+        <ul>
+          <li><span class="dot" style="background:#b81244"></span><div><strong>Performance</strong><span>Processor, RAM & graphics based on your workload</span></div></li>
+          <li><span class="dot" style="background:#12B886"></span><div><strong>Storage</strong><span>SSD type and capacity for your everyday needs</span></div></li>
+          <li><span class="dot" style="background:#FFB020"></span><div><strong>Budget</strong><span>Recommendation that fit your price range</span></div></li>
+          <li><span class="dot" style="background:#677aa3"></span><div><strong>Ratings</strong><span>User ratings to help you make a confident choice</span></div></li>
+        </ul>
+      </aside>
+    </div>
+    <div class="wrap body-section">
+      <section class="about-us" id="about-project">
+        <h1 style="font-size:38px; margin-bottom:12px;">About Us</h1>
+      </section>
+      <h2>Built to solve a problem students actually face.</h2>
+      <p>Study Specs is a web app that helps students find the right laptop based on their field of study,
+         budget and needs - without having to figure out confusing specs on their own.</p>
+      <p>Choose your field</p>
+    </article>
+
+    <div class="cards" id="dataset">
+      <div class="card" id="domains">
+        <div class="chip" style="background:#2F6FED">◧</div>
+        <h3>11 fields of study</h3>
+        <p>From CS & IT to Law & Public Policy, laptop are matched to needs of each field.</p>
+        
+      </div>
+      <div class="card">
+        <div class="chip" style="background:#FFB020">▤</div>
+        <h3>1,018 laptops dataset</h3>
+        <p>A dataset covering real laptop specs, including price, RAM, processor, storage and GPU.</p>
+        
+      </div>
+      <div class="card">
+        <div class="chip" style="background:#12B886">⇲</div>
+        <h3>Buy & compare</h3>
+        <p>Every recommendation links to Amazon, Flipkart and Croma so you can compare before you buy.</p>
+        
+      </div>
+    </div>
+
+    <svg class="wave" viewBox="0 0 1120 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 20 C 140 55, 280 0, 420 25 C 560 50, 700 0, 840 25 C 980 50, 1000 15, 1120 30 L1120 60 L0 60 Z" fill="#FFFFFF" fill-opacity="0.5"/>
+      <path d="M0 30 C 140 0, 280 60, 420 30 C 560 0, 700 60, 840 30 C 980 0, 1000 30, 1120 20 L1120 60 L0 60 Z" fill="#FFFFFF"/>
+    </svg>
+  </div>
+</main>
+
+<footer class="site" id="contact">
+  <div class="footer-inner">
+    <div>
+      <h4>About this project</h4>
+      <p>Study Specs<br>A college mini-project<br>Built using Python & Streamlit</p>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <div class="socials">
+        <a href="#" aria-label="GitHub">GH</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+  <p class="copyright">© 2026 Study Specs. A domain-matched laptop recommender.</p>
+</footer>
+
+<script>
+  const track = document.getElementById('track');
+  const dotsWrap = document.getElementById('dots');
+  const slides = track.children.length;
+  let index = 0;
+  for(let i=0;i<slides;i++){
+    const b = document.createElement('button');
+    if(i===0) b.classList.add('active');
+    b.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(b);
+  }
+  function go(i){
+    index = (i + slides) % slides;
+    track.style.transform = `translateX(-${index*100}%)`;
+    [...dotsWrap.children].forEach((d,di)=>d.classList.toggle('active', di===index));
+  }
+  document.getElementById('next').addEventListener('click', ()=>go(index+1));
+  document.getElementById('prev').addEventListener('click', ()=>go(index-1));
+  let auto = setInterval(()=>go(index+1), 6000);
+  track.addEventListener('mouseenter', ()=>clearInterval(auto));
+</script>
+
+<script>
+  // Stars: fixed seed = same sky every visit. Hover a star and it blinks.
+  (function(){
+    function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+    const rnd = mulberry32(11);
+    const field = document.getElementById('starfield');
+    const sizes = ['s1','s1','s2','s2','s3'];
+    for(let i=0;i<90;i++){
+      const s = document.createElement('span');
+      s.className = 'star ' + sizes[Math.floor(rnd()*sizes.length)];
+      s.style.left = (1 + rnd()*98).toFixed(1) + '%';
+      s.style.top = (1 + rnd()*92).toFixed(1) + '%';
+      s.style.opacity = (0.35 + rnd()*0.55).toFixed(2);
+      field.appendChild(s);
+    }
+  })();
+</script>
+
+<script>
+  // Link the website to the Streamlit app.
+  // Change APP_URL to your live Streamlit link when you deploy it.
+  const APP_URL = "http://localhost:8501";
+  document.querySelectorAll('[data-app-link]').forEach(a => {
+    a.href = APP_URL;
+  });
+</script>
+
+</body>
+</html>
