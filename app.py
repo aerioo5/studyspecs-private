@@ -541,4 +541,5 @@ else:
     footer()
 
 
-cube_slot.markdown(spec_cube(), unsafe_allow_html=True)
+if st.session_state.step >= 9:
+    cube_slot.markdown(spec_cube(), unsafe_allow_html=True)
