@@ -101,6 +101,18 @@ div[data-testid="stSlider"] *{color:#fff !important;}
 .results-count{color:rgba(255,255,255,0.72);font-size:13px;margin-bottom:18px;}
 .results-actions{margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.15);}
 .ss-footer{text-align:center;color:rgba(255,255,255,0.6);font-size:12px;margin-top:32px;}
+[data-testid="stElementContainer"]:has(.spec-cube-wrap),.element-container:has(.spec-cube-wrap){position:absolute;height:0;margin:0;padding:0;}
+.spec-cube-wrap{position:fixed;right:4vw;top:50%;transform:translateY(-50%);width:150px;height:150px;perspective:700px;z-index:2;pointer-events:none;}
+.spec-cube{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:cubeSpin 18s linear infinite;}
+.spec-face{position:absolute;inset:0;box-sizing:border-box;padding:12px;border-radius:14px;border:1px solid #8FB4FF;background:rgba(23,27,46,0.82);box-shadow:0 0 18px rgba(47,111,237,0.35);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.spec-face.f1{transform:rotateY(0deg) translateZ(75px);}
+.spec-face.f2{transform:rotateY(90deg) translateZ(75px);}
+.spec-face.f3{transform:rotateY(180deg) translateZ(75px);}
+.spec-face.f4{transform:rotateY(270deg) translateZ(75px);}
+.spec-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#8FB4FF;margin-bottom:6px;}
+.spec-value{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;line-height:1.3;color:#FFFFFF;}
+@keyframes cubeSpin{from{transform:rotateX(-14deg) rotateY(0deg);}to{transform:rotateX(-14deg) rotateY(360deg);}}
+@media (max-width:1200px){.spec-cube-wrap{display:none;}}
 </style>"""
 
 STYLE = STYLE.replace("__WAVE_FRONT__", WAVE_FRONT).replace("__WAVE_BACK__", WAVE_BACK)
@@ -124,6 +136,28 @@ def build_starfield(count=80, seed=11):
 
 
 st.markdown(build_starfield(), unsafe_allow_html=True)
+
+
+def spec_cube():
+    ans = st.session_state.get("answers", {})
+    budget = f"₹{ans['budget']:,.0f}" if "budget" in ans else None
+    workload = ans.get("performance", "").split(" (")[0] or None
+    storage = ans.get("storage", "").split(" (")[0] or None
+    faces = [
+        ("Field", ans.get("domain")),
+        ("Budget", budget),
+        ("Workload", workload),
+        ("Storage", storage),
+    ]
+    faces_html = "".join(
+        f'<div class="spec-face f{i}"><div class="spec-label">{label}</div>'
+        f'<div class="spec-value">{value or "Not set"}</div></div>'
+        for i, (label, value) in enumerate(faces, start=1)
+    )
+    return f'<div class="spec-cube-wrap"><div class="spec-cube">{faces_html}</div></div>'
+
+
+cube_slot = st.empty()
 
 
 # ------------------------------------------------------------
@@ -505,3 +539,6 @@ else:
         st.rerun()
 
     footer()
+
+
+cube_slot.markdown(spec_cube(), unsafe_allow_html=True)
